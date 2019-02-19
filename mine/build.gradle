@@ -1,0 +1,35 @@
+if(isNeedMineModle){
+    apply plugin: 'com.android.library'
+}else{
+    apply plugin: 'com.android.application'
+}
+android {
+    compileSdkVersion extCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion extMinSdkVersion
+        targetSdkVersion extTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        if(!isNeedMineModle){//不需要我的
+            applicationId "com.lzp.arouter.home"
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':common')
+
+    implementation extARouterApi
+    annotationProcessor extARouterCompiler
+}

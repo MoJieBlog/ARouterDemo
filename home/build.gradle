@@ -1,0 +1,42 @@
+if(isNeedHomeModle){
+    apply plugin: 'com.android.library'
+}else{
+    apply plugin: 'com.android.application'
+}
+android {
+    compileSdkVersion extCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion extMinSdkVersion
+        targetSdkVersion extTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        if(!isNeedHomeModle){//home不需要单独编译
+            applicationId "com.lzp.arouter.home"
+        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':common')
+
+    implementation extARouterApi
+    annotationProcessor extARouterCompiler
+}

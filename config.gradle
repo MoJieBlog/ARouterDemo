@@ -1,0 +1,40 @@
+ext{
+    //Build Gradle Plugin
+    extAndroidBulidGradlePlugin = "com.android.tools.build:gradle:3.2.1"
+
+    // Android SDK / Tools Version
+    extCompileSdkVersion = 28
+    extBuildToolsVersion = "28.0.3"
+    extMinSdkVersion = 19
+    extTargetSdkVersion = 28
+    extAppcompatV7 = "com.android.support:appcompat-v7:28.0.0"
+    extSupportV4 = 'com.android.support:support-v4:28.0.0'
+    extDesign = 'com.android.support:design:28.0.0'
+    extCardviewV7 = 'com.android.support:cardview-v7:28.0.0'
+    extRecyclerviewV7 = 'com.android.support:recyclerview-v7:28.0.0'
+    extSupportDynamicAnimation = 'com.android.support:support-dynamic-animation:28.0.0'
+    extConstraintLayout = "com.android.support.constraint:constraint-layout:1.1.3"
+
+    // butterknife
+    extButterknife = "com.jakewharton:butterknife:9.0.0-rc3"
+    extButterknifeCompiler = "com.jakewharton:butterknife-compiler:9.0.0-rc3"
+    extButterknifeGradlePlugin = "com.jakewharton:butterknife-gradle-plugin:9.0.0-rc3"
+
+    // glide 依赖
+    extGlide = "com.github.bumptech.glide:glide:4.8.0"
+    extGlideCompiler = "com.github.bumptech.glide:compiler:4.8.0"
+
+    // okhttp 依赖
+    extOkhttp = 'com.squareup.okhttp3:okhttp:3.12.0'
+
+    // facebookShimmer
+    extShimmer = 'com.facebook.shimmer:shimmer:0.4.0'
+
+    // 内存泄漏检测工具
+    extLeakcanaryAndroid = 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    extLeakcanarySupportFragment = 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
+
+    //ARouter
+    extARouterApi = 'com.alibaba:arouter-api:1.3.1'//ARouter api
+    extARouterCompiler = 'com.alibaba:arouter-compiler:1.1.4'//ARouter
+}

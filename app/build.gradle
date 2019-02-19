@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion extCompileSdkVersion
+    buildToolsVersion extBuildToolsVersion
+    defaultConfig {
+        applicationId "com.lzp.arouter"
+        minSdkVersion extMinSdkVersion
+        targetSdkVersion extTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        /*ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }*/
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName()]
+            }
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+
+        release {
+            debuggable false
+            minifyEnabled false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    /*signingConfigs{
+        debug{}
+        release{}
+    }
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled false
+            minifyEnabled false
+            signingConfig signingConfig.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfig.debug
+        }
+    }
+
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def buildName = "MagicCamera"
+            def type = variant.buildType.name
+            def releaseApkName = buildName + '_' + type + "_" + versionName + '.apk'
+            outputFileName = releaseApkName
+        }
+    }
+    */
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation extButterknife
+    annotationProcessor extButterknifeCompiler
+    //内存泄露检查
+    //implementation extLeakcanaryAndroid
+    //implementation extLeakcanarySupportFragment
+    implementation project(':common')
+
+    implementation extARouterApi
+    annotationProcessor extARouterCompiler
+
+    if (isNeedHomeModle.toBoolean()) {
+        implementation project(':home')
+    }
+
+    if (isNeedMineModle.toBoolean()) {
+        implementation project(':mine')
+    }
+}
