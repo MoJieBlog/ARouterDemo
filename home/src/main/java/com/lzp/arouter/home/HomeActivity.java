@@ -21,5 +21,40 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ARouter.getInstance().inject(this);
+
+        //ARouter.getInstance().build(Constance.ACTIVITY_HOME).navigation();
+
+        //携带参数
+        // ARouter.getInstance().build(Constance.ACTIVITY_HOME).withString("test","test").navigation();
+        //带返回。startActivityForResult
+      /* ARouter.getInstance().build(Constance.ACTIVITY_HOME)
+               //.withTransition(enterAnim,exitAnim) 动画
+
+               .navigation(this,100);*/
+
+       /* ARouter.getInstance().build(Constance.ACTIVITY_HOME).navigation(this, new NavCallback() {
+            @Override
+            public void onArrival(Postcard postcard) {
+                Log.e(TAG, "onArrival: ");
+            }
+
+            @Override
+            public void onFound(Postcard postcard) {
+                super.onFound(postcard);
+                Log.e(TAG, "onFound: ");
+            }
+
+            @Override
+            public void onInterrupt(Postcard postcard) {
+                super.onInterrupt(postcard);
+                Log.e(TAG, "onInterrupt: ");
+            }
+
+            @Override
+            public void onLost(Postcard postcard) {
+                super.onLost(postcard);
+                Log.e(TAG, "onLost: ");
+            }
+        });*/
     }
 }

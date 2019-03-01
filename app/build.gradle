@@ -74,22 +74,20 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     implementation extButterknife
     annotationProcessor extButterknifeCompiler
     //内存泄露检查
     //implementation extLeakcanaryAndroid
     //implementation extLeakcanarySupportFragment
     implementation project(':common')
-
     implementation extARouterApi
     annotationProcessor extARouterCompiler
-
     if (isNeedHomeModle.toBoolean()) {
         implementation project(':home')
     }
-
     if (isNeedMineModle.toBoolean()) {
         implementation project(':mine')
     }
+
+    api project(':vpindicator')
 }
