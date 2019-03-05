@@ -20,7 +20,7 @@ public class CircleTabView extends TabView {
     /**
      * 文字颜色
      */
-    private int textSelectedColor = 0xffff0000;
+    private int textSelectedColor = 0xffffff00;
     private int textUnSelectedColor = 0xff000000;
 
     /**
@@ -94,5 +94,11 @@ public class CircleTabView extends TabView {
         }else{
             unselected();
         }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        textView = null;
+        super.onDetachedFromWindow();
     }
 }

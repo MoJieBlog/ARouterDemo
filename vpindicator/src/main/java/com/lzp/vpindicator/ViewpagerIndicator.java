@@ -5,9 +5,10 @@ import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -17,7 +18,7 @@ import come.lzp.utils.UiUtils;
  * @author Li Xiaopeng
  * @date 2019/3/1
  */
-public class ViewpagerIndicator extends HorizontalScrollView implements ViewPager.OnPageChangeListener {
+public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "ViewpagerIndicator";
     /**
@@ -40,11 +41,19 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
      */
     private int currentPosition = 0;
 
-    private LinearLayout parentView;//装载tab的容器
     private ViewPager viewPager;
+
+    private MHorizontalScrollView tabScrollView;
+    private LinearLayout tabContainer;//装载tab的容器
+
+    private MHorizontalScrollView indicatorScrollView;
+    private LinearLayout indicatorContainer;
+
 
     private int leftMargin = 0;
     private int rightMargin = 0;
+
+    private IndicatorView indicatorView;
 
     public ViewpagerIndicator(Context context) {
         this(context, null);
@@ -58,22 +67,47 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
     }
 
     private void init() {
-        setOverScrollMode(OVER_SCROLL_NEVER);
-        setScrollbarFadingEnabled(true);
-        setHorizontalScrollBarEnabled(false);
-        createParentView();
+        createTabContainer();
+        tabScrollView.setOnScrollChangeListener(new MHorizontalScrollView.OnScrollChangeListener(){
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                indicatorScrollView.scrollTo(scrollX,scrollY);
+            }
+        });
     }
 
-    private void createParentView() {
-        parentView = new LinearLayout(context);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+    private void createIndicatorContainer() {
+        indicatorScrollView = new MHorizontalScrollView(context);
+        indicatorScrollView.setHorizontalScrollBarEnabled(false);
+        ViewGroup.LayoutParams scrollViewparams = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        indicatorScrollView.setLayoutParams(scrollViewparams);
+        indicatorContainer = new LinearLayout(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
-        parentView.setLayoutParams(params);
-        parentView.setGravity(Gravity.CENTER);
-        parentView.setOrientation(LinearLayout.HORIZONTAL);
-        addView(parentView);
+        indicatorContainer.setLayoutParams(layoutParams);
+        indicatorScrollView.addView(indicatorContainer);
+        addView(indicatorScrollView, 0);
     }
+
+    private void createTabContainer() {
+        tabScrollView = new MHorizontalScrollView(context);
+        ViewGroup.LayoutParams scrollViewparams = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        tabScrollView.setLayoutParams(scrollViewparams);
+        tabScrollView.setHorizontalScrollBarEnabled(false);
+        tabContainer = new LinearLayout(context);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        tabContainer.setLayoutParams(layoutParams);
+        tabScrollView.addView(tabContainer);
+        addView(tabScrollView);
+    }
+
 
     public void setUpWithViewPager(ViewPager viewPager) {
         if (viewPager == null || viewPager.getAdapter() == null) {
@@ -89,18 +123,53 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
         if (indicatorMode == INDICATOR_MODE_SCROLL) {
             scrollToCenter(position, positionOffset);
         }
+        if (indicatorView != null) {
+            indicatorScrollView.scrollTo(tabScrollView.getScrollX(), 0);
+            updateIndicator(position, positionOffset);
+        }
+    }
+
+    private void updateIndicator(int position, float positionOffset) {
+        if (indicatorContainer != null && tabContainer != null) {
+            View positionView = tabContainer.getChildAt(position);
+            int positionLeft = positionView.getLeft();
+            int positionRight = positionView.getRight();
+            int positionViewWidth = positionView.getWidth();
+            View afterView = tabContainer.getChildAt(position + 1);
+            int afterViewWith = 0;
+            if (afterView != null) {
+                afterViewWith = afterView.getWidth();
+            }
+            int viewWidth = indicatorView.getViewWidth();
+            if (positionOffset <= 0.5) {
+                float startX = positionLeft
+                        + (positionViewWidth - viewWidth) / 2;
+                float endX = startX
+                        + viewWidth
+                        + ((positionViewWidth+afterViewWith)/2 + rightMargin + leftMargin) * (positionOffset) * 2;
+                indicatorView.onPageScrolled(startX, endX);
+            } else {
+                float startX = positionLeft
+                        + (positionViewWidth - viewWidth) / 2
+                        + (positionViewWidth + rightMargin + leftMargin) * (positionOffset - 0.5f) * 2;
+                float endX =positionLeft+
+                        (positionViewWidth+viewWidth)/2+
+                        ((positionViewWidth+afterViewWith)/2 + rightMargin + leftMargin);
+                indicatorView.onPageScrolled(startX, endX);
+            }
+        }
     }
 
     /**
      * 滚动到中间
      *
-     * @param position
-     * @param positionOffset
+     * @param position       当前显示的靠左侧的item的position
+     * @param positionOffset 当前显示的靠左侧的item的偏移量
      */
     private void scrollToCenter(int position, float positionOffset) {
-        if (position < parentView.getChildCount()) {
-            View positionView = parentView.getChildAt(position);
-            View afterView = parentView.getChildAt(position + 1);
+        if (position < tabContainer.getChildCount()) {
+            View positionView = tabContainer.getChildAt(position);
+            View afterView = tabContainer.getChildAt(position + 1);
             int positionViewRight = positionView.getRight();
             int positionViewWidth = positionView.getWidth();
 
@@ -110,7 +179,7 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
             int offsetStart = positionViewRight - positionViewWidth / 2 - winWide / 2;
             int scrollX = (int) ((afterViewWidth / 2 + positionViewWidth / 2 + leftMargin + rightMargin) * positionOffset) + offsetStart;
 
-            scrollTo(scrollX, 0);
+            tabScrollView.scrollTo(scrollX, 0);
 
         }
     }
@@ -120,10 +189,10 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
         if (currentPosition == position) {
             return;
         }
-        int childCount = parentView.getChildCount();
-        View currentTab = parentView.getChildAt(currentPosition);
+        int childCount = tabContainer.getChildCount();
+        View currentTab = tabContainer.getChildAt(currentPosition);
         if (childCount > position) {
-            View childAt = parentView.getChildAt(position);
+            View childAt = tabContainer.getChildAt(position);
             if (childAt instanceof TabView && currentTab instanceof TabView) {
                 ((TabView) currentTab).unselected();
                 ((TabView) childAt).selected();
@@ -138,13 +207,12 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
 
     public void createTab(final int pos, @NonNull TabView tab) {
         setTabLayoutParams(tab);
-        parentView.addView(tab, pos);
+        tabContainer.addView(tab, pos);
         tab.setSelected(pos == currentPosition);
         tab.setOnClickListener(new OnClickListener() {
             @Override
@@ -170,7 +238,20 @@ public class ViewpagerIndicator extends HorizontalScrollView implements ViewPage
                 tab.getTabHeight() == 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : tab.getTabHeight());
         layoutParams.rightMargin = rightMargin;
         layoutParams.leftMargin = leftMargin;
+        layoutParams.gravity = Gravity.CENTER;
         tab.setLayoutParams(layoutParams);
     }
 
+    public void setIndicatorView(IndicatorView indicatorView, int gravity) {
+        this.indicatorView = indicatorView;
+        createIndicatorContainer();
+        indicatorContainer.addView(indicatorView);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) indicatorView.getLayoutParams();
+        layoutParams.gravity = gravity;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+    }
 }

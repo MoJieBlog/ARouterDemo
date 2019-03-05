@@ -11,7 +11,9 @@
         <com.lzp.vpindicator.ViewpagerIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="45dp"/>
+            android:layout_height="50dp">
+
+        </com.lzp.vpindicator.ViewpagerIndicator>
 
 
         <android.support.v4.view.ViewPager
@@ -20,5 +22,6 @@
             android:layout_height="200dp"
             android:layout_centerInParent="true"
             android:clipChildren="false" />
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
