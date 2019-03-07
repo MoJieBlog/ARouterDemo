@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.widget.FrameLayout;
 
 import com.lzp.vpindicator.IndicatorView;
@@ -38,35 +37,30 @@ public class LineIndicatorView extends IndicatorView {
 
     public LineIndicatorView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
         init();
     }
 
     private void init() {
-       // viewWidth = UiUtils.dip2px(getContext(), 10);
-        //viewHeight = UiUtils.dip2px(getContext(), 3);
-        viewHeight = 80;
-        viewWidth = 80;
-        radius = 40;
-        //radius = UiUtils.dip2px(getContext(), 1.5f);
+        indicatorWidth = UiUtils.dip2px(getContext(), 10);
+        indicatorHeight = UiUtils.dip2px(getContext(), 3);
+        radius = UiUtils.dip2px(getContext(), 1.5f);
         paint = new Paint();
+        paint.setAntiAlias(true);
         paint.setColor(lineColor);
         rectF = new RectF();
 
-        endX = startX + viewWidth;
+        endX = startX + indicatorWidth;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(FrameLayout.LayoutParams.MATCH_PARENT,viewHeight);
-
+        setMeasuredDimension(FrameLayout.LayoutParams.MATCH_PARENT, indicatorWidth);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        rectF.set(startX, 0, endX, viewHeight);
+        rectF.set(startX, 0, endX, indicatorWidth);
         canvas.drawRoundRect(rectF, radius, radius, paint);
     }
 
@@ -82,17 +76,20 @@ public class LineIndicatorView extends IndicatorView {
         invalidate();
     }
 
-
-
     @Override
-    public IndicatorView setViewHeight(int viewHeight) {
-        this.viewHeight = viewHeight;
+    public IndicatorView setIndicatorHeight(int viewHeight) {
+        this.indicatorWidth = viewHeight;
         return this;
     }
 
     @Override
-    public IndicatorView setViewWidth(int viewWidth) {
-        this.viewWidth = viewWidth;
+    public IndicatorView setIndicatorWidth(int viewWidth) {
+        this.indicatorWidth = viewWidth;
+        return this;
+    }
+
+    public LineIndicatorView setRadius(float radius) {
+        this.radius = radius;
         return this;
     }
 }

@@ -11,7 +11,7 @@ import android.view.View;
  */
 public abstract class IndicatorView extends View implements IIndicator{
 
-    protected int viewHeight = 0,viewWidth = 0;//如果设置为0，怎认为自适应
+    protected int indicatorHeight = 0,indicatorWidth = 0;//如果设置为0，怎认为自适应
 
     public IndicatorView(Context context) {
         this(context, null);
@@ -21,11 +21,11 @@ public abstract class IndicatorView extends View implements IIndicator{
         super(context, attrs);
     }
 
-    public int getViewHeight() {
-        return viewHeight;
+    public int getIndicatorHeight() {
+        return indicatorHeight;
     }
 
-    public int getViewWidth() {
-        return viewWidth;
+    public int getIndicatorWidth() {
+        return indicatorWidth;
     }
 }

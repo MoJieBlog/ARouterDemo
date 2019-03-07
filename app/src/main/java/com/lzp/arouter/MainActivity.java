@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
                             .setTabHeight(80)
                             .setTabWidth(80));
         }
-
-        indicator.setIndicatorView(new LineIndicatorView(this),Gravity.CENTER);
+        LineIndicatorView lineIndicatorView = new LineIndicatorView(this);
+        lineIndicatorView.setRadius(40f);
+        indicator.setIndicatorView(lineIndicatorView.setIndicatorHeight(80).setIndicatorWidth(80), Gravity.CENTER);
     }
 }

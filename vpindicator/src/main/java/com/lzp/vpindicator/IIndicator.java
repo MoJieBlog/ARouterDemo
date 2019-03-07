@@ -12,7 +12,7 @@ public interface IIndicator {
 
     void onPageScrolled(float positionOffset, float toX);
 
-    IndicatorView setViewHeight(int viewHeight);
-    IndicatorView setViewWidth(int viewWidth);
+    IndicatorView setIndicatorHeight(int viewHeight);
+    IndicatorView setIndicatorWidth(int viewWidth);
 
 }

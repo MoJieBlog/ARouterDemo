@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import come.lzp.utils.UiUtils;
@@ -25,11 +24,6 @@ public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageC
      * 滚动模式
      */
     public static final int INDICATOR_MODE_SCROLL = 0;
-
-    /**
-     * 均分模式
-     */
-    public static final int INDICATOR_MODE_FIX = 1;
 
     private Context context;
     private Resources resources;
@@ -68,10 +62,12 @@ public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageC
 
     private void init() {
         createTabContainer();
-        tabScrollView.setOnScrollChangeListener(new MHorizontalScrollView.OnScrollChangeListener(){
+        tabScrollView.setOnScrollChangeListener(new MHorizontalScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                indicatorScrollView.scrollTo(scrollX,scrollY);
+                if (indicatorScrollView != null && indicatorView != null) {
+                    indicatorScrollView.scrollTo(scrollX, scrollY);
+                }
             }
         });
     }
@@ -124,7 +120,6 @@ public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageC
             scrollToCenter(position, positionOffset);
         }
         if (indicatorView != null) {
-            indicatorScrollView.scrollTo(tabScrollView.getScrollX(), 0);
             updateIndicator(position, positionOffset);
         }
     }
@@ -133,28 +128,27 @@ public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageC
         if (indicatorContainer != null && tabContainer != null) {
             View positionView = tabContainer.getChildAt(position);
             int positionLeft = positionView.getLeft();
-            int positionRight = positionView.getRight();
             int positionViewWidth = positionView.getWidth();
             View afterView = tabContainer.getChildAt(position + 1);
             int afterViewWith = 0;
             if (afterView != null) {
                 afterViewWith = afterView.getWidth();
             }
-            int viewWidth = indicatorView.getViewWidth();
+            int viewWidth = indicatorView.getIndicatorWidth();
             if (positionOffset <= 0.5) {
                 float startX = positionLeft
                         + (positionViewWidth - viewWidth) / 2;
                 float endX = startX
                         + viewWidth
-                        + ((positionViewWidth+afterViewWith)/2 + rightMargin + leftMargin) * (positionOffset) * 2;
+                        + ((positionViewWidth + afterViewWith) / 2 + rightMargin + leftMargin) * (positionOffset) * 2;
                 indicatorView.onPageScrolled(startX, endX);
             } else {
                 float startX = positionLeft
                         + (positionViewWidth - viewWidth) / 2
                         + (positionViewWidth + rightMargin + leftMargin) * (positionOffset - 0.5f) * 2;
-                float endX =positionLeft+
-                        (positionViewWidth+viewWidth)/2+
-                        ((positionViewWidth+afterViewWith)/2 + rightMargin + leftMargin);
+                float endX = positionLeft +
+                        (positionViewWidth + viewWidth) / 2 +
+                        ((positionViewWidth + afterViewWith) / 2 + rightMargin + leftMargin);
                 indicatorView.onPageScrolled(startX, endX);
             }
         }
@@ -240,6 +234,14 @@ public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageC
         layoutParams.leftMargin = leftMargin;
         layoutParams.gravity = Gravity.CENTER;
         tab.setLayoutParams(layoutParams);
+    }
+
+    public void setIndicatorView(IndicatorView indicatorView) {
+        this.indicatorView = indicatorView;
+        createIndicatorContainer();
+        indicatorContainer.addView(indicatorView);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) indicatorView.getLayoutParams();
+        layoutParams.gravity = Gravity.BOTTOM;
     }
 
     public void setIndicatorView(IndicatorView indicatorView, int gravity) {
