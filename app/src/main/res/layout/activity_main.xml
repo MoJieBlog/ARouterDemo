@@ -11,9 +11,7 @@
         <com.lzp.vpindicator.IndicatorLayout
             android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-        </com.lzp.vpindicator.IndicatorLayout>
+            android:layout_height="50dp"/>
 
         <com.lzp.vpindicator.IndicatorLayout
             android:id="@+id/indicator2"

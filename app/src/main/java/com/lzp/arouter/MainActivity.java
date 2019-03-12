@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPagerAdapter = new ViewPagerAdapter(this, mImages);
         vp1.setOffscreenPageLimit(3);
         vp1.setAdapter(mViewPagerAdapter);
+
         indicator.setUpWithViewPager(vp1);
         indicator.setLeftMargin(15);
         indicator.setRightMargin(15);
