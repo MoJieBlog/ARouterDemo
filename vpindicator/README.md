@@ -75,7 +75,7 @@ IndicatorLayout继承FrameLayout，里面放了两个HorizontalScrollView，一�
     public abstract void unselected();
 ```
 
-这里举个栗子，相信大家的聪明才智一看就懂了
+这里举个栗子，相信大家的聪明才智一看就懂了,当然我自己写了两个栗子，CircleTabView和TextTabView
 ```java
 public class TextTabView extends TabView {
 
@@ -171,7 +171,7 @@ public class TextTabView extends TabView {
     IndicatorView setIndicatorHeight(int viewHeight);
     IndicatorView setIndicatorWidth(int viewWidth);
 ```
-然后就是重写onDraw，画出你想要的形状了。
+然后就是重写onDraw，画出你想要的形状了。可以参考LineIndicatorView
 
 #### 结束语
 第一次这么严肃的写博客，求轻喷。
