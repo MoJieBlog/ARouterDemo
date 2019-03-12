@@ -27,9 +27,6 @@ public class CircleTabView extends TabView {
      * 文字大小
      */
     private int textSize = 15;
-
-    private boolean selected = false;
-
     private TextView textView;
     public CircleTabView(Context context) {
         this(context, null);
@@ -79,21 +76,6 @@ public class CircleTabView extends TabView {
         selected = false;
         textView.setTextColor(textUnSelectedColor);
         setBackgroundResource(R.drawable.dot_black);
-    }
-
-    @Override
-    public boolean isSelected() {
-        return selected;
-    }
-
-    @Override
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-        if (selected){
-            selected();
-        }else{
-            unselected();
-        }
     }
 
     @Override

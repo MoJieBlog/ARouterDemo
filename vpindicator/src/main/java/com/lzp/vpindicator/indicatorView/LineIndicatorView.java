@@ -60,7 +60,7 @@ public class LineIndicatorView extends IndicatorView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        rectF.set(startX, 0, endX, indicatorWidth);
+        rectF.set(startX, getMeasuredHeight()-indicatorHeight, endX, getMeasuredHeight());
         canvas.drawRoundRect(rectF, radius, radius, paint);
     }
 
@@ -78,7 +78,7 @@ public class LineIndicatorView extends IndicatorView {
 
     @Override
     public IndicatorView setIndicatorHeight(int viewHeight) {
-        this.indicatorWidth = viewHeight;
+        this.indicatorHeight = viewHeight;
         return this;
     }
 

@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -15,6 +12,7 @@ import com.lzp.arouter.common.Constance;
 import com.lzp.vpindicator.ViewpagerIndicator;
 import com.lzp.vpindicator.indicatorView.LineIndicatorView;
 import com.lzp.vpindicator.tabView.CircleTabView;
+import com.lzp.vpindicator.tabView.TextTabView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ViewPager vp1;
     @BindView(R.id.indicator)
     ViewpagerIndicator indicator;
+    @BindView(R.id.indicator2)
+    ViewpagerIndicator indicator2;
 
 
     private ViewPagerAdapter mViewPagerAdapter;
@@ -64,15 +64,30 @@ public class MainActivity extends AppCompatActivity {
         indicator.setLeftMargin(15);
         indicator.setRightMargin(15);
 
+        indicator2.setUpWithViewPager(vp1);
+        indicator2.setLeftMargin(15);
+        indicator2.setRightMargin(15);
+
+
         for (int i = 0; i < mImages.length; i++) {
             indicator.createTab(i,
                     new CircleTabView(this)
                             .setText(String.valueOf(i + 1))
                             .setTabHeight(80)
                             .setTabWidth(80));
+
+            indicator2.createTab(i,
+                    new TextTabView(this)
+                            .setText(String.valueOf(i + 1))
+                            .setTabHeight(80));
         }
+
         LineIndicatorView lineIndicatorView = new LineIndicatorView(this);
         lineIndicatorView.setRadius(40f);
         indicator.setIndicatorView(lineIndicatorView.setIndicatorHeight(80).setIndicatorWidth(80), Gravity.CENTER);
+
+        LineIndicatorView lineIndicatorView2 = new LineIndicatorView(this);
+        lineIndicatorView2.setRadius(5f);
+        indicator2.setIndicatorView(lineIndicatorView2.setIndicatorHeight(10).setIndicatorWidth(80), Gravity.BOTTOM);
     }
 }

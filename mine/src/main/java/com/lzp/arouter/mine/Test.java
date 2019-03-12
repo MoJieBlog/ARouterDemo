@@ -1,27 +1,29 @@
 package com.lzp.arouter.mine;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 /**
  * @author Li Xiaopeng
  * @date 2019/3/6
  */
 public class Test {
 
-    class AppView{
+    class A {
 
-        private String id;
-        private String name;
+        public A(String a) throws RuntimeException {
 
-        public AppView(String id, String name) {
-            this.id = id;
-            this.name = name;
         }
     }
 
-    class MyMap extends AppView{
-
-        public MyMap(String id, String name) {
-            super(id, name);
+    class B {
+        void doTest(){
+            A a = new A("");
         }
     }
-
 }

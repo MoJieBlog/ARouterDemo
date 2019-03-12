@@ -19,6 +19,8 @@ public abstract class TabView extends FrameLayout implements ITab {
 
     protected int tabHeight = 0,tabWidth = 0;//如果设置为0，怎认为自适应
 
+    protected boolean selected = false;
+
     public TabView(Context context) {
         this(context, null);
     }
@@ -35,5 +37,20 @@ public abstract class TabView extends FrameLayout implements ITab {
 
     public int getTabWidth() {
         return tabHeight;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        if (selected){
+            selected();
+        }else{
+            unselected();
+        }
     }
 }
