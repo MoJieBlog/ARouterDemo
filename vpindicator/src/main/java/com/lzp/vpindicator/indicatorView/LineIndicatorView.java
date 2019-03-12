@@ -71,7 +71,7 @@ public class LineIndicatorView extends IndicatorView {
     }
 
     @Override
-    public void onPageScrolled(float startX, float endX) {
+    public void onPageScrolled(float startX, float endX, float positionOffset) {
         this.startX = startX;
         this.endX = endX;
         invalidate();

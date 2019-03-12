@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
  * @author Li Xiaopeng
  * @date 2019/3/1
  */
-public abstract class TabView extends FrameLayout implements ITab {
+public abstract class TabView extends FrameLayout{
 
     protected Context context;
     protected Resources resources;
@@ -53,4 +53,16 @@ public abstract class TabView extends FrameLayout implements ITab {
             unselected();
         }
     }
+
+    public abstract TabView setTabHeight(int tabHeight);
+    public abstract TabView setTabWidth(int tabWidth);
+    /**
+     * 选中状态
+     */
+    public abstract void selected();
+
+    /**
+     * 未选中状态
+     */
+    public abstract void unselected();
 }

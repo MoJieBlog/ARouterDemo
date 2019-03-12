@@ -20,15 +20,9 @@ import come.lzp.utils.UiUtils;
 public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "ViewpagerIndicator";
-    /**
-     * 滚动模式
-     */
-    public static final int INDICATOR_MODE_SCROLL = 0;
 
     private Context context;
     private Resources resources;
-
-    private int indicatorMode = INDICATOR_MODE_SCROLL;//默认滚动模式
 
     /**
      * 当前选中的position
@@ -42,7 +36,6 @@ public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChan
 
     private MHorizontalScrollView indicatorScrollView;
     private LinearLayout indicatorContainer;
-
 
     private int leftMargin = 0;
     private int rightMargin = 0;
@@ -116,9 +109,7 @@ public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChan
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (indicatorMode == INDICATOR_MODE_SCROLL) {
-            scrollToCenter(position, positionOffset);
-        }
+        scrollToCenter(position, positionOffset);
         if (indicatorView != null) {
             updateIndicator(position, positionOffset);
         }
@@ -141,7 +132,7 @@ public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChan
                 float endX = startX
                         + viewWidth
                         + ((positionViewWidth + afterViewWith) / 2 + rightMargin + leftMargin) * (positionOffset) * 2;
-                indicatorView.onPageScrolled(startX, endX);
+                indicatorView.onPageScrolled(startX, endX,positionOffset);
             } else {
                 float startX = positionLeft
                         + (positionViewWidth - viewWidth) / 2
@@ -149,7 +140,7 @@ public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChan
                 float endX = positionLeft +
                         (positionViewWidth + viewWidth) / 2 +
                         ((positionViewWidth + afterViewWith) / 2 + rightMargin + leftMargin);
-                indicatorView.onPageScrolled(startX, endX);
+                indicatorView.onPageScrolled(startX, endX,positionOffset);
             }
         }
     }
@@ -250,10 +241,5 @@ public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChan
         indicatorContainer.addView(indicatorView);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) indicatorView.getLayoutParams();
         layoutParams.gravity = gravity;
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
     }
 }
