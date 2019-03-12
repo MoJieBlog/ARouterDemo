@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.lzp.arouter.common.Constance;
-import com.lzp.vpindicator.ViewpagerIndicator;
+import com.lzp.vpindicator.IndicatorLayout;
 import com.lzp.vpindicator.indicatorView.LineIndicatorView;
 import com.lzp.vpindicator.tabView.CircleTabView;
 import com.lzp.vpindicator.tabView.TextTabView;
@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.vp_1)
     ViewPager vp1;
     @BindView(R.id.indicator)
-    ViewpagerIndicator indicator;
+    IndicatorLayout indicator;
     @BindView(R.id.indicator2)
-    ViewpagerIndicator indicator2;
+    IndicatorLayout indicator2;
 
 
     private ViewPagerAdapter mViewPagerAdapter;
@@ -76,13 +76,18 @@ public class MainActivity extends AppCompatActivity {
                             .setTabHeight(80)
                             .setTabWidth(80));
 
+            TextTabView tabView = (TextTabView) new TextTabView(this)
+                    .setText(String.valueOf(i + 1))
+                    .setTabHeight(80);
+            tabView.setTextSelectedColor(0xff0000ff);
+            tabView.setTextUnSelectedColor(0xff666666);
+            tabView.setTextSize(18);
             indicator2.createTab(i,
-                    new TextTabView(this)
-                            .setText(String.valueOf(i + 1))
-                            .setTabHeight(80));
+                    tabView);
         }
 
         LineIndicatorView lineIndicatorView = new LineIndicatorView(this);
+        lineIndicatorView.setLineColor(0xffaaff33);
         lineIndicatorView.setRadius(40f);
         indicator.setIndicatorView(lineIndicatorView.setIndicatorHeight(80).setIndicatorWidth(80), Gravity.CENTER);
 

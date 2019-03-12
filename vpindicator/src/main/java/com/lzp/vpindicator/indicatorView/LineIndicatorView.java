@@ -46,7 +46,7 @@ public class LineIndicatorView extends IndicatorView {
         radius = UiUtils.dip2px(getContext(), 1.5f);
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(lineColor);
+
         rectF = new RectF();
 
         endX = startX + indicatorWidth;
@@ -61,6 +61,7 @@ public class LineIndicatorView extends IndicatorView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         rectF.set(startX, getMeasuredHeight()-indicatorHeight, endX, getMeasuredHeight());
+        paint.setColor(lineColor);
         canvas.drawRoundRect(rectF, radius, radius, paint);
     }
 
@@ -91,5 +92,9 @@ public class LineIndicatorView extends IndicatorView {
     public LineIndicatorView setRadius(float radius) {
         this.radius = radius;
         return this;
+    }
+
+    public void setLineColor(int lineColor) {
+        this.lineColor = lineColor;
     }
 }

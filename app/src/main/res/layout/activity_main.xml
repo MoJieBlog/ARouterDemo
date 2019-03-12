@@ -8,19 +8,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.lzp.vpindicator.ViewpagerIndicator
+        <com.lzp.vpindicator.IndicatorLayout
             android:id="@+id/indicator"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
-        </com.lzp.vpindicator.ViewpagerIndicator>
+        </com.lzp.vpindicator.IndicatorLayout>
 
-        <com.lzp.vpindicator.ViewpagerIndicator
+        <com.lzp.vpindicator.IndicatorLayout
             android:id="@+id/indicator2"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
-        </com.lzp.vpindicator.ViewpagerIndicator>
+        </com.lzp.vpindicator.IndicatorLayout>
 
 
         <android.support.v4.view.ViewPager

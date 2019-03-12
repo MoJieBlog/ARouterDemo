@@ -1,1 +1,1 @@
-include ':app', ':home', ':mine', ':common', ':vpindicator', ':utils'
+include ':app', ':home', ':mine', ':common', ':vpindicator', ':utils', ':codestudy'

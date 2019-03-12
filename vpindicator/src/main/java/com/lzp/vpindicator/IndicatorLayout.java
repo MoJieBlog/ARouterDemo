@@ -17,7 +17,7 @@ import come.lzp.utils.UiUtils;
  * @author Li Xiaopeng
  * @date 2019/3/1
  */
-public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageChangeListener {
+public class IndicatorLayout extends FrameLayout implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "ViewpagerIndicator";
     /**
@@ -49,11 +49,11 @@ public class ViewpagerIndicator extends FrameLayout implements ViewPager.OnPageC
 
     private IndicatorView indicatorView;
 
-    public ViewpagerIndicator(Context context) {
+    public IndicatorLayout(Context context) {
         this(context, null);
     }
 
-    public ViewpagerIndicator(Context context, AttributeSet attrs) {
+    public IndicatorLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         this.resources = context.getResources();

@@ -12,7 +12,7 @@ import com.lzp.vpindicator.TabView;
  * @author Li Xiaopeng
  * @date 2019/3/1
  */
-public class TextTabView extends TabView{
+public class TextTabView extends TabView {
 
     /**
      * 文字颜色
@@ -28,7 +28,7 @@ public class TextTabView extends TabView{
     private TextView textView;
 
     public TextTabView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public TextTabView(Context context, @Nullable AttributeSet attrs) {
@@ -73,5 +73,20 @@ public class TextTabView extends TabView{
     public void unselected() {
         selected = false;
         textView.setTextColor(textUnSelectedColor);
+    }
+
+    public void setTextSelectedColor(int textSelectedColor) {
+        this.textSelectedColor = textSelectedColor;
+        textView.setTextColor(textSelectedColor);
+    }
+
+    public void setTextUnSelectedColor(int textUnSelectedColor) {
+        this.textUnSelectedColor = textUnSelectedColor;
+        textView.setTextColor(textUnSelectedColor);
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+        textView.setTextSize(textSize);
     }
 }

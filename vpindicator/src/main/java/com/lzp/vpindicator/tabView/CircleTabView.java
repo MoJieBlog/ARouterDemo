@@ -28,6 +28,7 @@ public class CircleTabView extends TabView {
      */
     private int textSize = 15;
     private TextView textView;
+
     public CircleTabView(Context context) {
         this(context, null);
     }
@@ -82,5 +83,17 @@ public class CircleTabView extends TabView {
     protected void onDetachedFromWindow() {
         textView = null;
         super.onDetachedFromWindow();
+    }
+
+    public void setTextSelectedColor(int textSelectedColor) {
+        this.textSelectedColor = textSelectedColor;
+    }
+
+    public void setTextUnSelectedColor(int textUnSelectedColor) {
+        this.textUnSelectedColor = textUnSelectedColor;
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
     }
 }
