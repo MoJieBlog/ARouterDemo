@@ -3,7 +3,9 @@ package com.lzp.arouter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -13,6 +15,12 @@ import com.lzp.vpindicator.IndicatorLayout;
 import com.lzp.vpindicator.indicatorView.LineIndicatorView;
 import com.lzp.vpindicator.tabView.CircleTabView;
 import com.lzp.vpindicator.tabView.TextTabView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     IndicatorLayout indicator;
     @BindView(R.id.indicator2)
     IndicatorLayout indicator2;
+    @BindView(R.id.tv)
+    TextView tv;
 
 
     private ViewPagerAdapter mViewPagerAdapter;
@@ -52,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         init();
     }
@@ -95,5 +106,28 @@ public class MainActivity extends AppCompatActivity {
         LineIndicatorView lineIndicatorView2 = new LineIndicatorView(this);
         lineIndicatorView2.setRadius(5f);
         indicator2.setIndicatorView(lineIndicatorView2.setIndicatorHeight(10).setIndicatorWidth(80), Gravity.BOTTOM);
+
+        ArrayList list0 = new ArrayList();
+
+        ArrayList list1 = new ArrayList();
+        for (int i=0;i<3;i++){
+            list1.add(i);
+        }
+
+        ArrayList list2 = new ArrayList();
+        for (int i=0;i<11;i++){
+            list2.add(i);
+        }
+    }
+
+    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
+    public void setTvTest(String test){
+        tv.setText(test);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -90,4 +90,7 @@ dependencies {
     }
 
     api project(':vpindicator')
+    api project(':flowlayout')
+
+
 }

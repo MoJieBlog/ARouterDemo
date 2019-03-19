@@ -36,4 +36,6 @@ dependencies {
     api extRecyclerviewV7
     api extOkhttp
 
+    api extEventbus
+
 }
