@@ -3,8 +3,9 @@ package com.lzp.arouter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -26,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @Route(path = Constance.ACTIVITY_MAIN)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     @Autowired(name = "text")
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     IndicatorLayout indicator2;
     @BindView(R.id.tv)
     TextView tv;
+    @BindView(R.id.btnToMine)
+    Button btnToMine;
+    @BindView(R.id.btnToHome)
+    Button btnToHome;
 
 
     private ViewPagerAdapter mViewPagerAdapter;
@@ -110,18 +115,21 @@ public class MainActivity extends AppCompatActivity {
         ArrayList list0 = new ArrayList();
 
         ArrayList list1 = new ArrayList();
-        for (int i=0;i<3;i++){
+        for (int i = 0; i < 3; i++) {
             list1.add(i);
         }
 
         ArrayList list2 = new ArrayList();
-        for (int i=0;i<11;i++){
+        for (int i = 0; i < 11; i++) {
             list2.add(i);
         }
+
+        btnToHome.setOnClickListener(this);
+        btnToMine.setOnClickListener(this);
     }
 
-    @Subscribe(sticky = true,threadMode = ThreadMode.MAIN)
-    public void setTvTest(String test){
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void setTvTest(String test) {
         tv.setText(test);
     }
 
@@ -129,5 +137,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnToHome:
+                ARouter.getInstance().build(Constance.ACTIVITY_HOME).navigation();
+                break;
+            case R.id.btnToMine:
+                ARouter.getInstance().build(Constance.ACTIVITY_PERSONAL).navigation();
+                break;
+        }
     }
 }

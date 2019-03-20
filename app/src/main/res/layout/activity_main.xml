@@ -8,6 +8,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btnToMine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转mine model"/>
+
+        <Button
+            android:id="@+id/btnToHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="跳转home Model"/>
         <com.lzp.flowlayout.FlowLayout
             android:layout_width="match_parent"
             android:background="#a1b2c3"

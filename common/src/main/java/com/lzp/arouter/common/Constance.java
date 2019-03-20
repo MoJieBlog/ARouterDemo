@@ -6,6 +6,6 @@ package com.lzp.arouter.common;
  */
 public class Constance {
     public static final String ACTIVITY_HOME = "/home/HomeActivity";
-    public static final String ACTIVITY_PERSONAL = "/home/PersonalActivity";
+    public static final String ACTIVITY_PERSONAL = "/mine/PersonalActivity";
     public static final String ACTIVITY_MAIN = "/app/main";
 }
