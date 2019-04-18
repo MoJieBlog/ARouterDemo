@@ -67,7 +67,7 @@ public class FlowLayout extends ViewGroup {
             int childHeight = childAt.getMeasuredHeight() + topMargin + bottomMargin;
 
             if ((lineWidth + childWidth) > measureWidth) {
-                LogUtils.logE(TAG, "onMeasure: 换行了" + childIndex);
+               // LogUtils.logE(TAG, "onMeasure: 换行了" + childIndex);
                 //需要换行
                 //总宽 = 单行宽度最大值
                 width = Math.max(lineWidth, width);

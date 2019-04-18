@@ -92,5 +92,6 @@ dependencies {
     api project(':vpindicator')
     api project(':flowlayout')
 
+    api 'com.squareup.okhttp3:okhttp:3.2.0'
 
 }

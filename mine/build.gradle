@@ -30,6 +30,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':common')
 
+    implementation extButterknife
+    annotationProcessor extButterknifeCompiler
+
     implementation extARouterApi
     annotationProcessor extARouterCompiler
 }
